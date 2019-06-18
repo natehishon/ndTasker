@@ -1,0 +1,33 @@
+
+<div class="tasks-panel">
+
+  <h3>All Tasks</h3>
+
+
+  <mat-tab-group>
+
+    <mat-tab label="Beginners">
+
+      <tasks-card-list
+        [tasks]="beginnerTasks$ | async">
+
+      </tasks-card-list>
+
+    </mat-tab>
+
+    <mat-tab label="Advanced">
+
+      <tasks-card-list
+        [tasks]="advancedTasks$ | async"
+
+      ></tasks-card-list>
+
+    </mat-tab>
+
+  </mat-tab-group>
+
+
+
+</div>
+
+

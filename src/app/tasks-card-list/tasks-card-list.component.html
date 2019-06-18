@@ -1,0 +1,30 @@
+
+
+<mat-card *ngFor="let task of tasks" class="task-card mat-elevation-z10">
+
+    <mat-card-header>
+
+        <mat-card-title>{{task.titles.description}}</mat-card-title>
+
+    </mat-card-header>
+
+    <img mat-card-image [src]="task.iconUrl">
+
+    <mat-card-content>
+        <p>{{task.titles.longDescription}}</p>
+    </mat-card-content>
+
+    <mat-card-actions class="task-actions">
+
+        <button mat-button class="mat-raised-button mat-primary" [routerLink]="['/tasks', task.url]">
+            VIEW TASK
+        </button>
+
+        <button mat-button class="mat-raised-button mat-accent"
+                (click)="editTask(task)">
+            EDIT
+        </button>
+
+    </mat-card-actions>
+
+</mat-card>
