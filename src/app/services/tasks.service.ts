@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {first, map, tap} from 'rxjs/operators';
 import {Task} from '../model/task';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {Observable} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {convertSnaps} from './db-utils';
 import OrderByDirection = firebase.firestore.OrderByDirection;
 import {SubTask} from '../model/subTask';
@@ -53,6 +53,10 @@ export class TasksService {
         tap(whatever => console.log(whatever))
       );
 
+  }
+
+  saveTask(taskId:string, changes: Partial<Task>): Observable<any> {
+    return from (this.db.doc(`tasks/${taskId}`).update(changes));
   }
 
 }

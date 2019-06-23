@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
 
     this.afAuth.authState.subscribe(user => console.log(user));
 
+
     this.isLoggedIn$ = this.afAuth.authState.pipe(map(user => !!user));
 
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));

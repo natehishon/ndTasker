@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Task} from '../model/task';
 import {SubTask} from '../model/subTask';
 import {TasksService} from '../services/tasks.service';
+import {finalize} from 'rxjs/operators';
 
 
 @Component({
@@ -15,6 +16,11 @@ export class TaskComponent implements OnInit {
   task: Task;
 
   subTasks: SubTask[];
+
+  lastPageLoaded =  0;
+
+  loading = false;
+
 
   displayedColumns = ['seqNo', 'description'];
 
@@ -29,9 +35,12 @@ export class TaskComponent implements OnInit {
 
     this.task = this.route.snapshot.data['task'];
 
-    console.log(this.task.id);
+    this.loading = true;
 
     this.tasksService.findSubTasks(this.task.id)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
       .subscribe(
         subTasks => this.subTasks = subTasks
       );
@@ -39,6 +48,15 @@ export class TaskComponent implements OnInit {
   }
 
   loadMore() {
+
+    this.lastPageLoaded++;
+
+    this.tasksService.findSubTasks(this.task.id, 'asc',
+      this.lastPageLoaded)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(subTasks => this.subTasks = this.subTasks.concat(subTasks));
 
   }
 

@@ -13,11 +13,6 @@ var config = {
   appId: "1:763683786264:web:82fa17e1a155c3c2"
 };
 
-console.log("Uploading data to the database with the following config:\n");
-
-console.log(JSON.stringify(config));
-
-console.log("\n\n\n\nMake sure that this is your own database, so that you have write access to it.\n\n\n");
 
 firebase.initializeApp(config);
 
@@ -41,8 +36,6 @@ async function uploadData() {
       const subTasks = taskRef.collection("subTasks");
 
       const taskSubTasks = findSubTasksForTask(task.id);
-
-      //console.log(`Adding ${courseLessons.length} lessons to ${course.description}`);
 
       taskSubTasks.forEach(async subTask => {
 

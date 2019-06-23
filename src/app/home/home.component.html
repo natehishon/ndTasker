@@ -8,7 +8,7 @@
 
     <mat-tab label="Beginners">
 
-      <tasks-card-list
+      <tasks-card-list (tasksEdited)="reloadTasks()"
         [tasks]="beginnerTasks$ | async">
 
       </tasks-card-list>
@@ -17,7 +17,7 @@
 
     <mat-tab label="Advanced">
 
-      <tasks-card-list
+      <tasks-card-list (tasksEdited)="reloadTasks()"
         [tasks]="advancedTasks$ | async"
 
       ></tasks-card-list>

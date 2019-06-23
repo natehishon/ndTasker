@@ -17,26 +17,30 @@ export class HomeComponent implements OnInit {
   beginnerTasks$: Observable<Task[]>;
   advancedTasks$: Observable<Task[]>;
 
-  constructor(private tasksService: TasksService ) {
+  constructor(private tasksService: TasksService) {
 
   }
 
   ngOnInit() {
+    this.reloadTasks();
+
+  }
+
+  reloadTasks() {
     this.tasks$ = this.tasksService.loadAllTasks();
 
 
     this.beginnerTasks$ = this.tasks$.pipe(
       map(tasks => tasks.filter(
-        task => task.categories.includes("BEGINNER")
+        task => task.categories.includes('BEGINNER')
       ))
     );
 
     this.advancedTasks$ = this.tasks$.pipe(
       map(tasks => tasks.filter(
-        task => task.categories.includes("ADVANCED")
+        task => task.categories.includes('ADVANCED')
       ))
     );
-
   }
 
 

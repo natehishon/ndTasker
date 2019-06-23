@@ -2,47 +2,48 @@
 
   <h2>{{task?.titles.description}}</h2>
 
-  <img class="task-thumbnail mat-elevation-z8" [src]="task?.iconUrl">
+  <img class="task-thumbnail mat-elevation-z8" [src]="task?.uploadedImageUrl">
 
-  <div class="spinner-container" *ngIf="false">
+  <div class="spinner-container" *ngIf="loading">
 
     <mat-spinner></mat-spinner>
 
   </div>
 
-  <mat-table class="subTasks-table mat-elevation-z8" [dataSource]="subTasks">
 
-    <ng-container matColumnDef="seqNo">
+  <!--<mat-table class="subTasks-table mat-elevation-z8" [dataSource]="subTasks">-->
 
-      <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+    <!--<ng-container matColumnDef="seqNo">-->
 
-      <mat-cell *matCellDef="let subTask">{{subTask.seqNo}}</mat-cell>
+      <!--<mat-header-cell *matHeaderCellDef>#</mat-header-cell>-->
 
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-
-      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-
-      <mat-cell class="description-cell"
-                *matCellDef="let subTask">{{subTask.description}}</mat-cell>
-
-    </ng-container>
-
-    <!--<ng-container matColumnDef="duration">-->
-
-      <!--<mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>-->
-
-      <!--<mat-cell class="duration-cell"-->
-                <!--*matCellDef="let subTask">{{subTask.duration}}</mat-cell>-->
+      <!--<mat-cell *matCellDef="let subTask">{{subTask.seqNo}}</mat-cell>-->
 
     <!--</ng-container>-->
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <!--<ng-container matColumnDef="description">-->
 
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <!--<mat-header-cell *matHeaderCellDef>Description</mat-header-cell>-->
 
-  </mat-table>
+      <!--<mat-cell class="description-cell"-->
+                <!--*matCellDef="let subTask">{{subTask.description}}</mat-cell>-->
+
+    <!--</ng-container>-->
+
+    <!--&lt;!&ndash;<ng-container matColumnDef="duration">&ndash;&gt;-->
+
+      <!--&lt;!&ndash;<mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>&ndash;&gt;-->
+
+      <!--&lt;!&ndash;<mat-cell class="duration-cell"&ndash;&gt;-->
+                <!--&lt;!&ndash;*matCellDef="let subTask">{{subTask.duration}}</mat-cell>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</ng-container>&ndash;&gt;-->
+
+    <!--<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>-->
+
+    <!--<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>-->
+
+  <!--</mat-table>-->
 
 
   <button class="bottom-toolbar" mat-raised-button color="primary" (click)="loadMore()">Load More</button>
