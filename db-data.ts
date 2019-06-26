@@ -2,35 +2,29 @@ export const TASKS: any = {
 
   1: {
     id: 1,
-    titles: {
-      description: 'Test task description',
-      longDescription: 'Tesk task long description'
-    },
+    description: 'Test task description',
+    longDescription: 'Tesk task long description',
     iconUrl: 'https://i.imgur.com/r3iOmUV.jpg',
-    categories: ['BEGINNER'],
+    category: 'ACCOUNTING',
     seqNo: 0,
     url: 'first-task'
   },
 
   2: {
     id: 2,
-    titles: {
-      description: 'Test task description2',
-      longDescription: 'Tesk task long description2'
-    },
+    description: 'Test task description2',
+    longDescription: 'Tesk task long description2',
     iconUrl: 'https://i.imgur.com/r3iOmUV.jpg',
-    categories: ['ADVANCED'],
+    category: 'ACCOUNTING',
     seqNo: 2,
     url: 'second-task'
   },
   3: {
     id: 3,
-    titles: {
-      description: 'Test task description3',
-      longDescription: 'Tesk task long description3'
-    },
+    description: 'Test task description3',
+    longDescription: 'Tesk task long description3',
     iconUrl: 'https://i.imgur.com/r3iOmUV.jpg',
-    categories: ['BEGINNER'],
+    category: 'HR',
     seqNo: 3,
     url: 'third-task'
   }

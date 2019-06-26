@@ -37,6 +37,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import { LoginComponent } from './login/login.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
+import { SlickModule } from 'ngx-slick';
 
 
 
@@ -79,7 +80,8 @@ import {ServiceWorkerModule} from '@angular/service-worker';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : []
+    environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : [],
+    SlickModule.forRoot()
   ],
   providers: [
     TaskResolver

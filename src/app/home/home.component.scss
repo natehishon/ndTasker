@@ -1,0 +1,19 @@
+.tasks-title{
+  text-align: center;
+  font-size: 35px;
+}
+
+.tasks-panel {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+::ng-deep .mat-tab-labels{
+  justify-content: center; /* align items in Main Axis */
+}
+
+.new-task-button-container{
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}

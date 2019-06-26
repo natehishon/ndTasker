@@ -1,52 +1,117 @@
 <div class="task">
 
-  <h2>{{task?.titles.description}}</h2>
+  <h2>{{task?.description}}</h2>
+
 
   <img class="task-thumbnail mat-elevation-z8" [src]="task?.uploadedImageUrl">
 
-  <div class="spinner-container" *ngIf="loading">
 
-    <mat-spinner></mat-spinner>
+  <!--<button mat-button class="mat-raised-button mat-accent"-->
+  <!--(click)="addTask()">-->
+  <!--New Task-->
+  <!--</button>-->
 
+  <!--<button mat-button class="mat-raised-button mat-accent"-->
+  <!--&gt;-->
+  <!--Launch Task-->
+  <!--</button>-->
+
+  <div class="button-container">
+    <a class="button is-large is-primary  task-buttons" (click)="addTask()">
+    <span class="icon is-medium">
+      <i class="fa fa-file"></i>
+    </span>
+      <span>add task</span>
+    </a>
+
+    <a class="button is-large is-info  task-buttons" (click)="toggleModal()">
+    <span class="icon is-medium">
+      <i class="fa fa-file"></i>
+    </span>
+      <span>launch task</span>
+    </a>
   </div>
+
+  <div>
+    <div class="modal" [ngClass]="{'is-active': modalActive}">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="is-clipped">
+          <div class="sub-task-container">
+            <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig">
+              <div ngxSlickItem *ngFor="let subtask of subTasks" class="slide">
+                <div class="subTask-slide">
+                  <div class="box">
+                    <article class="media">
+                      <div class="media-left">
+                        <figure class="image is-64x64">
+                          <img src="subtask.iconUrl" alt="Image">
+                        </figure>
+                      </div>
+                      <div class="media-content">
+                        <div class="content">
+                          <p>
+                            {{subtask.description}}
+                          </p>
+                        </div>
+                      </div>
+
+                    </article>
+                  </div>
+                </div>
+              </div>
+            </ngx-slick>
+          </div>
+        </div>
+
+      </div>
+      <button class="modal-close is-large" aria-label="close" (click)="toggleModal()"></button>
+    </div>
+  </div>
+
+
+  <!--<button (click)="addSlide()">Add</button>-->
+  <!--<button (click)="removeSlide()">Remove</button>-->
+  <!--<button (click)="slickModal.slickGoTo(2)">slickGoto 2</button>-->
+  <!--<button (click)="slickModal.unslick()">unslick</button>-->
 
 
   <!--<mat-table class="subTasks-table mat-elevation-z8" [dataSource]="subTasks">-->
 
-    <!--<ng-container matColumnDef="seqNo">-->
+  <!--<ng-container matColumnDef="seqNo">-->
 
-      <!--<mat-header-cell *matHeaderCellDef>#</mat-header-cell>-->
+  <!--<mat-header-cell *matHeaderCellDef>#</mat-header-cell>-->
 
-      <!--<mat-cell *matCellDef="let subTask">{{subTask.seqNo}}</mat-cell>-->
+  <!--<mat-cell *matCellDef="let subTask">{{subTask.seqNo}}</mat-cell>-->
 
-    <!--</ng-container>-->
+  <!--</ng-container>-->
 
-    <!--<ng-container matColumnDef="description">-->
+  <!--<ng-container matColumnDef="description">-->
 
-      <!--<mat-header-cell *matHeaderCellDef>Description</mat-header-cell>-->
+  <!--<mat-header-cell *matHeaderCellDef>Description</mat-header-cell>-->
 
-      <!--<mat-cell class="description-cell"-->
-                <!--*matCellDef="let subTask">{{subTask.description}}</mat-cell>-->
+  <!--<mat-cell class="description-cell"-->
+  <!--*matCellDef="let subTask">{{subTask.description}}</mat-cell>-->
 
-    <!--</ng-container>-->
+  <!--</ng-container>-->
 
-    <!--&lt;!&ndash;<ng-container matColumnDef="duration">&ndash;&gt;-->
+  <!--&lt;!&ndash;<ng-container matColumnDef="duration">&ndash;&gt;-->
 
-      <!--&lt;!&ndash;<mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>&ndash;&gt;-->
+  <!--&lt;!&ndash;<mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>&ndash;&gt;-->
 
-      <!--&lt;!&ndash;<mat-cell class="duration-cell"&ndash;&gt;-->
-                <!--&lt;!&ndash;*matCellDef="let subTask">{{subTask.duration}}</mat-cell>&ndash;&gt;-->
+  <!--&lt;!&ndash;<mat-cell class="duration-cell"&ndash;&gt;-->
+  <!--&lt;!&ndash;*matCellDef="let subTask">{{subTask.duration}}</mat-cell>&ndash;&gt;-->
 
-    <!--&lt;!&ndash;</ng-container>&ndash;&gt;-->
+  <!--&lt;!&ndash;</ng-container>&ndash;&gt;-->
 
-    <!--<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>-->
+  <!--<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>-->
 
-    <!--<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>-->
+  <!--<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>-->
 
   <!--</mat-table>-->
 
 
-  <button class="bottom-toolbar" mat-raised-button color="primary" (click)="loadMore()">Load More</button>
+  <!--<button class="bottom-toolbar" mat-raised-button color="primary" (click)="loadMore()">Load More</button>-->
 
 </div>
 

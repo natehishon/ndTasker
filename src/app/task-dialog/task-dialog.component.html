@@ -6,22 +6,39 @@
   <mat-form-field>
 
     <input matInput
-           placeholder="task Description"
+           placeholder="Task Title"
            formControlName="description">
 
   </mat-form-field>
 
   <mat-form-field>
 
-        <textarea matInput placeholder="Description"
+        <textarea matInput placeholder="Task Description"
                   formControlName="longDescription">
 
         </textarea>
 
   </mat-form-field>
 
+  <mat-form-field>
+
+    <input matInput
+           placeholder="Task url"
+           formControlName="url">
+
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Select Category</mat-label>
+    <mat-select formControlName="category">
+      <mat-option  *ngFor="let cat of category" [value]="cat.value">
+        {{cat.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <div class="task-image-upload">
-    <span>Task:</span>
+    <span>Image:</span>
 
     <input type="file" (change)="uploadFile($event)">
     <div class="upload-progress" *ngIf="(uploadPercent$ | async) as percentage">
@@ -36,12 +53,10 @@
 
     <ng-container *ngIf="downloadUrl$ | async as downloadUrl">
       <img class="uploaded-image" [src]="downloadUrl">
-
     </ng-container>
 
 
   </div>
-
 
 
 </mat-dialog-content>

@@ -1,31 +1,54 @@
-
 <div class="tasks-panel">
 
-  <h3>All Tasks</h3>
+  <h3 class="tasks-title">All Tasks</h3>
+
+  <div class="new-task-button-container">
+    <button  class="button is-info bubutton" *ngIf="user?.isAdmin"
+             (click)="newTask()">
+      <span>new task</span>&nbsp;<i class="fa fa-plus"></i>
+    </button>
+  </div>
 
 
   <mat-tab-group>
 
-    <mat-tab label="Beginners">
+    <ng-container *ngIf="accounting">
 
-      <tasks-card-list (tasksEdited)="reloadTasks()"
-        [tasks]="beginnerTasks$ | async">
+      <mat-tab label="Accounting">
 
-      </tasks-card-list>
+        <tasks-card-list (tasksEdited)="reloadTasks()"
+                         [tasks]="accountingTasks$ | async">
 
-    </mat-tab>
+        </tasks-card-list>
 
-    <mat-tab label="Advanced">
+      </mat-tab>
 
-      <tasks-card-list (tasksEdited)="reloadTasks()"
-        [tasks]="advancedTasks$ | async"
+    </ng-container>
 
-      ></tasks-card-list>
+    <ng-container *ngIf="hr">
 
-    </mat-tab>
+      <mat-tab label="HR">
+
+        <tasks-card-list (tasksEdited)="reloadTasks()"
+                         [tasks]="hrTasks$   | async">
+
+        </tasks-card-list>
+
+      </mat-tab>
+
+    </ng-container>
+
+
+    <!--<mat-tab label="Advanced">-->
+
+    <!--<tasks-card-list (tasksEdited)="reloadTasks()"-->
+    <!--[tasks]="advancedTasks$ | async"-->
+
+    <!--&gt;</tasks-card-list>-->
+
+    <!--</mat-tab>-->
 
   </mat-tab-group>
-
 
 
 </div>

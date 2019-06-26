@@ -16,10 +16,20 @@ import {concatMap, last} from 'rxjs/operators';
 export class TaskDialogComponent implements OnInit {
 
   form: FormGroup;
-  description: string;
   task: Task;
   uploadPercent$: Observable<number>;
   downloadUrl$: Observable<string>;
+  status;
+  category = [
+    {
+      name: 'Accounting',
+      value: 'ACCOUNTING'
+    },
+    {
+      name: 'HR',
+      value: 'HR'
+    }
+    ];
 
   constructor(
     private fb: FormBuilder,
@@ -30,30 +40,53 @@ export class TaskDialogComponent implements OnInit {
 
     this.task = task;
 
-    const titles = task.titles;
+    const desc = task.description;
+    const long = task.longDescription;
+    const cate = task.category;
+    const upload = task.uploadedImageUrl;
+    const url = task.url;
+
+    if (!this.task.id) {
+      this.status = 'NEW';
+    } else {
+      this.status = 'EDIT';
+    }
 
     this.form = fb.group({
-      description: [titles.description, Validators.required],
-      longDescription: [titles.longDescription, Validators.required]
+      description: [desc, Validators.required],
+      longDescription: [long, Validators.required],
+      category: [cate, Validators.required],
+      uploadedImageUrl: [upload, Validators.required],
+      url: [url, Validators.required]
     });
 
   }
 
   ngOnInit() {
 
-  }
 
+  }
 
   save() {
 
-    const changes = this.form.value;
+    console.log("changes");
+    console.log(this.form.value);
+    if (this.status == 'EDIT') {
+      this.taskService.saveTask(this.task.id, this.form.value)
+        .subscribe(
+          () => this.dialogRef.close(this.form.value)
+        );
 
-    this.taskService.saveTask(this.task.id, {titles: changes})
-      .subscribe(
-        () => this.dialogRef.close(this.form.value)
-      );
+      this.dialogRef.close(this.form.value);
+    } else {
+      this.taskService.newTask(this.form.value)
+        .subscribe(
+          () => this.dialogRef.close(this.form.value)
+        );
 
-    this.dialogRef.close(this.form.value);
+      this.dialogRef.close(this.form.value);
+    }
+
 
   }
 
@@ -78,6 +111,7 @@ export class TaskDialogComponent implements OnInit {
         concatMap(url => this.taskService.saveTask(this.task.id, {uploadedImageUrl: url}))
       );
 
+    saveUrl$.subscribe("HEY");
     saveUrl$.subscribe(console.log);
 
   }

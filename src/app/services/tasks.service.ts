@@ -17,8 +17,9 @@ export class TasksService {
 
 
   loadAllTasks(): Observable<Task[]> {
+    console.log("loead");
     return this.db.collection('tasks',
-      ref => ref.orderBy('seqNo'))
+      ref => ref.orderBy('description'))
       .snapshotChanges()
       .pipe(
         map(snaps => convertSnaps<Task>(snaps)),
@@ -36,16 +37,13 @@ export class TasksService {
           return tasks.length === 1 ? tasks[0] : undefined;
         }),
         first());
-
   }
 
-  findSubTasks(taskId:string, sortOrder: OrderByDirection = 'asc',
-              pageNumber = 0, pageSize = 3):Observable<SubTask[]> {
+
+  findSubTasks(taskId:string, sortOrder: OrderByDirection = 'asc'):Observable<SubTask[]> {
 
     return this.db.collection(`tasks/${taskId}/subTasks`,
-      ref => ref.orderBy('seqNo', sortOrder)
-        .limit(pageSize)
-        .startAfter(pageNumber * pageSize))
+      ref => ref.orderBy('seqNo', sortOrder))
       .snapshotChanges()
       .pipe(
         map(snaps => convertSnaps<SubTask>(snaps)),
@@ -56,7 +54,13 @@ export class TasksService {
   }
 
   saveTask(taskId:string, changes: Partial<Task>): Observable<any> {
+    console.log("changes");
+    console.log(changes);
     return from (this.db.doc(`tasks/${taskId}`).update(changes));
+  }
+
+  newTask(changes: Partial<Task>): Observable<any> {
+    return from (this.db.collection('tasks').add(changes));
   }
 
 }

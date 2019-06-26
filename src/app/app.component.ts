@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
+import {TasksService} from './services/tasks.service';
+import {UserService} from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +16,11 @@ export class AppComponent implements OnInit {
 
   isLoggedOut$:Observable<boolean>;
 
+  user:Observable<any>;
+
   pictureUrl$: Observable<string>;
 
-  constructor(private afAuth: AngularFireAuth) {
+  constructor(private afAuth: AngularFireAuth, private userService: UserService) {
 
 
   }
@@ -26,7 +30,10 @@ export class AppComponent implements OnInit {
     this.afAuth.authState.subscribe(user => console.log(user));
 
 
-    this.isLoggedIn$ = this.afAuth.authState.pipe(map(user => !!user));
+    this.isLoggedIn$ = this.afAuth.authState.pipe(
+      map(user => !!user)
+      , tap(whatever => console.log(whatever))
+    );
 
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 

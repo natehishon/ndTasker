@@ -4,26 +4,33 @@
 
     <mat-card-header>
 
-        <mat-card-title>{{task.titles.description}}</mat-card-title>
+        <mat-card-title>{{task.description}}</mat-card-title>
 
     </mat-card-header>
 
     <img mat-card-image [src]="task.uploadedImageUrl ? task.uploadedImageUrl : task.iconUrl">
 
     <mat-card-content>
-        <p>{{task.titles.longDescription}}</p>
+
     </mat-card-content>
 
     <mat-card-actions class="task-actions">
 
-        <button mat-button class="mat-raised-button mat-primary" [routerLink]="['/tasks', task.url]">
-            VIEW TASK
+        <button  class="button is-info bubutton" [routerLink]="['/tasks', task.url]">
+          <span>view</span>&nbsp;<i class="fa fa-search-plus"></i>
         </button>
 
-        <button mat-button class="mat-raised-button mat-accent"
+
+      <!--<ng-container *ngIf="user | async as userobk">-->
+
+
+        <button class="button is-primary bubutton" *ngIf="user?.isAdmin"
                 (click)="editTask(task)">
-            EDIT
+          <span>edit</span>&nbsp;<i class="fa fa-edit"></i>
         </button>
+
+      <!--</ng-container>-->
+
 
     </mat-card-actions>
 
