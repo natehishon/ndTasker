@@ -5,7 +5,7 @@ import {Task} from '../model/task';
 import {TasksService} from '../services/tasks.service';
 import {Observable} from 'rxjs';
 import {AngularFireStorage} from '@angular/fire/storage';
-import {concatMap, last} from 'rxjs/operators';
+import {concatMap, last, tap} from 'rxjs/operators';
 
 
 @Component({
@@ -20,6 +20,7 @@ export class TaskDialogComponent implements OnInit {
   uploadPercent$: Observable<number>;
   downloadUrl$: Observable<string>;
   status;
+  tempUrl: string;
   category = [
     {
       name: 'Accounting',
@@ -46,6 +47,7 @@ export class TaskDialogComponent implements OnInit {
     const upload = task.uploadedImageUrl;
     const url = task.url;
 
+
     if (!this.task.id) {
       this.status = 'NEW';
     } else {
@@ -69,9 +71,13 @@ export class TaskDialogComponent implements OnInit {
 
   save() {
 
+    this.form.value.uploadedImageUrl = this.task.uploadedImageUrl;
+
     console.log("changes");
     console.log(this.form.value);
     if (this.status == 'EDIT') {
+      console.log("EDIT");
+      console.log(this.form.value);
       this.taskService.saveTask(this.task.id, this.form.value)
         .subscribe(
           () => this.dialogRef.close(this.form.value)
@@ -92,6 +98,8 @@ export class TaskDialogComponent implements OnInit {
 
   uploadFile(event) {
 
+    console.log("running");
+
     const file: File = event.target.files[0];
 
     const filePath = `tasks/${this.task.id}/${file.name}`;
@@ -104,15 +112,18 @@ export class TaskDialogComponent implements OnInit {
       .pipe(
         last(),
         concatMap(() => this.storage.ref(filePath).getDownloadURL())
+        ,tap(whatever => {this.task.uploadedImageUrl = whatever})
       );
 
     const saveUrl$ = this.downloadUrl$
       .pipe(
-        concatMap(url => this.taskService.saveTask(this.task.id, {uploadedImageUrl: url}))
-      );
+        last(),
+        concatMap(url => {
+          console.log("url")
+          console.log(url)
+          this.tempUrl = url
+        }))
 
-    saveUrl$.subscribe("HEY");
-    saveUrl$.subscribe(console.log);
 
   }
 

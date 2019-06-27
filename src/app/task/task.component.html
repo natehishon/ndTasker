@@ -17,18 +17,18 @@
   <!--</button>-->
 
   <div class="button-container">
-    <a class="button is-large is-primary  task-buttons" (click)="addTask()">
+    <a class="button is-large is-primary  task-buttons" (click)="addTask()" *ngIf="user?.isAdmin">
     <span class="icon is-medium">
       <i class="fa fa-file"></i>
     </span>
-      <span>add task</span>
+      <span>add subtask</span>
     </a>
 
     <a class="button is-large is-info  task-buttons" (click)="toggleModal()">
     <span class="icon is-medium">
       <i class="fa fa-file"></i>
     </span>
-      <span>launch task</span>
+      <span>launch subtasks</span>
     </a>
   </div>
 

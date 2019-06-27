@@ -27,6 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {TaskResolver} from "./services/task.resolver";
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import { SubTaskDialogComponent} from './sub-task-dialog/sub-task-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 import {AngularFireModule} from '@angular/fire';
@@ -51,7 +52,8 @@ import { SlickModule } from 'ngx-slick';
     TaskComponent,
     TasksCardListComponent,
     TaskDialogComponent,
-    LoginComponent
+    LoginComponent,
+    SubTaskDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +89,7 @@ import { SlickModule } from 'ngx-slick';
     TaskResolver
   ],
   bootstrap: [AppComponent],
-  entryComponents: [TaskDialogComponent]
+  entryComponents: [TaskDialogComponent, SubTaskDialogComponent]
 })
 export class AppModule {
 }

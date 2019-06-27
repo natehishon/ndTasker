@@ -8,6 +8,9 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {UserService} from '../services/user.service';
 import {Observable} from 'rxjs';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {MatDialog, MatDialogConfig} from '@angular/material';
+import {TaskDialogComponent} from '../task-dialog/task-dialog.component';
+import {SubTaskDialogComponent} from '../sub-task-dialog/sub-task-dialog.component';
 
 
 @Component({
@@ -38,11 +41,12 @@ export class TaskComponent implements OnInit {
 
   displayedColumns = ['seqNo', 'description'];
 
+  user;
 
 
 
   constructor(
-    private db: AngularFirestore, private route: ActivatedRoute, private tasksService: TasksService, private afAuth: AngularFireAuth, private userService: UserService) {
+    private dialog: MatDialog, private db: AngularFirestore, private route: ActivatedRoute, private tasksService: TasksService, private afAuth: AngularFireAuth, private userService: UserService) {
 
 
   }
@@ -64,7 +68,13 @@ export class TaskComponent implements OnInit {
         subTasks => this.subTasks = subTasks
       );
 
-    this.afAuth.authState.subscribe(user => console.log(user));
+    this.afAuth.authState.subscribe(user => {
+      this.userService.findUser(user.uid).then(
+        user2 => {
+          this.user = user2.data();
+        }
+      )
+    });
 
 
 
@@ -74,8 +84,7 @@ export class TaskComponent implements OnInit {
 
     this.lastPageLoaded++;
 
-    this.tasksService.findSubTasks(this.task.id, 'asc',
-      this.lastPageLoaded)
+    this.tasksService.findSubTasks(this.task.id, 'asc')
       .pipe(
         finalize(() => this.loading = false)
       )
@@ -86,29 +95,42 @@ export class TaskComponent implements OnInit {
   addTask() {
 
 
-    this.subs.add({
-      description: 'string',
-      seqNo: 6,
-      taskId: 1
-    }).then(whatever => {
-      this.tasksService.findSubTasks(this.task.id)
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            console.log("finalize")
-          }),
-          tap(() => {
-            this.windowEventLaunch();
-          })
-        )
-        .subscribe(
-          subTasks => {
-            this.subTasks = subTasks;
+
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+
+      dialogConfig.data = {};
+
+      this.dialog.open(SubTaskDialogComponent, dialogConfig)
+        .afterClosed()
+        .subscribe(val => {
+          if (val) {
+
+            this.subs.add(val).then(whatever => {
+              this.tasksService.findSubTasks(this.task.id)
+                .pipe(
+                  finalize(() => {
+                    this.loading = false;
+                    console.log("finalize")
+                  }),
+                  tap(() => {
+                    this.windowEventLaunch();
+                  })
+                )
+                .subscribe(
+                  subTasks => {
+                    this.subTasks = subTasks;
+
+                  }
+                );
+              return whatever;
+            });
 
           }
-        );
-      return whatever;
-    });
+        });
+
 
   }
 
